@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Live CV Builder — UZ / EN / RU</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- Yuqori sarlavha qismi (rasmdagi uslubda) -->
+  <section class="hero">
+    <div class="hero-kicker" id="heroKicker">LIVE PREVIEW</div>
+    <h1 class="hero-title" id="heroTitle">Fill it in. Watch it update.</h1>
+    <p class="hero-subtitle" id="heroSubtitle">
+      Type on the left; the preview on the right shows exact A4 layout. Your work saves as you go.
+    </p>
+  </section>
+
+  <!-- Asosiy ilova oynasi -->
+  <div class="app-shell">
+    <!-- Toolbar -->
+    <header class="toolbar">
+      <div class="toolbar-left">
+        <select id="templateSelect" class="select-pill" aria-label="Template">
+          <option value="tpl-modern" id="optModern">Modern Profile</option>
+          <option value="tpl-classic" id="optClassic">Classic CV</option>
+          <option value="tpl-minimal" id="optMinimal">Minimal Clean</option>
+        </select>
+
+        <div class="lang-switch">
+          <button type="button" class="lang-btn active" data-lang="uz">O‘zbek</button>
+          <button type="button" class="lang-btn" data-lang="en">English</button>
+          <button type="button" class="lang-btn" data-lang="ru">Русский</button>
+        </div>
+
+        <div class="color-swatches" title="Accent color">
+          <button type="button" class="swatch active" data-primary="#2563eb" data-dark="#1d4ed8" style="background:#2563eb"></button>
+          <button type="button" class="swatch" data-primary="#0f766e" data-dark="#115e59" style="background:#0f766e"></button>
+          <button type="button" class="swatch" data-primary="#4f46e5" data-dark="#4338ca" style="background:#4f46e5"></button>
+          <button type="button" class="swatch" data-primary="#b45309" data-dark="#92400e" style="background:#b45309"></button>
+        </div>
+      </div>
+
+      <div class="toolbar-right">
+        <span class="saved-badge" id="savedBadge">● Saved in this browser</span>
+        <button type="button" class="btn-ghost" id="btnSample">Sample</button>
+        <button type="button" class="btn-ghost" id="btnClear">Clear</button>
+        <button type="button" class="btn-dark" id="btnPrint">↓ Download PDF</button>
+      </div>
+    </header>
+
+    <!-- Ish maydoni: Chapda forma, o'ngda A4 preview -->
+    <main class="builder-grid">
+      <!-- Chap panel -->
+      <aside class="editor-col">
+        <div class="helper-banner" id="helperBanner">
+          This is sample content. Overwrite it with your own details; nothing is exported until you download.
+        </div>
+
+        <!-- Personal details karta -->
+        <div class="panel-card">
+          <div class="panel-header">
+            <span id="lblPersonal">Personal details</span>
+          </div>
+
+          <div class="photo-row">
+            <div class="photo-thumb" id="photoThumb">
+              <span id="photoPlaceholder">Photo</span>
+            </div>
+            <div class="photo-actions">
+              <div class="photo-btns">
+                <label class="mini-btn" id="btnUploadPhoto" for="photoInput">Upload photo</label>
+                <input type="file" id="photoInput" accept="image/*" hidden />
+                <button type="button" class="mini-btn danger" id="btnRemovePhoto">Remove</button>
+              </div>
+              <label class="checkbox-line">
+                <input type="checkbox" id="showPhotoCheck" checked />
+                <span id="lblShowPhoto">Show photo</span>
+              </label>
+            </div>
+          </div>
+
+          <div class="row-2">
+            <div class="input-group">
+              <label for="firstName" id="lblFirstName">First name</label>
+              <input type="text" id="firstName" />
+            </div>
+            <div class="input-group">
+              <label for="lastName" id="lblLastName">Last name</label>
+              <input type="text" id="lastName" />
+            </div>
+          </div>
+
+          <div class="input-group">
+            <label for="jobTitle" id="lblJobTitle">Professional title</label>
+            <input type="text" id="jobTitle" />
+          </div>
+
+          <div class="row-2">
+            <div class="input-group">
+              <label for="email" id="lblEmail">Email</label>
+              <input type="email" id="email" />
+            </div>
+            <div class="input-group">
+              <label for="phone" id="lblPhone">Phone</label>
+              <input type="text" id="phone" />
+            </div>
+          </div>
+
+          <div class="input-group">
+            <label for="location" id="lblLocation">Address / Location</label>
+            <input type="text" id="location" />
+          </div>
+
+          <div class="input-group">
+            <label for="website" id="lblWebsite">LinkedIn / Portfolio</label>
+            <input type="text" id="website" />
+          </div>
+
+          <div class="input-group mb-0">
+            <label for="summary" id="lblSummary">Profile / Summary</label>
+            <textarea id="summary"></textarea>
+          </div>
+        </div>
+
+        <!-- Experience karta -->
+        <div class="panel-card">
+          <div class="panel-header">
+            <span id="lblExperience">Work experience</span>
+          </div>
+          <div id="experienceList"></div>
+          <button type="button" class="dashed-add" id="btnAddExp">+ Add experience</button>
+        </div>
+
+        <!-- Education karta -->
+        <div class="panel-card">
+          <div class="panel-header">
+            <span id="lblEducation">Education</span>
+          </div>
+          <div id="educationList"></div>
+          <button type="button" class="dashed-add" id="btnAddEdu">+ Add education</button>
+        </div>
+
+        <!-- Skills & Languages karta -->
+        <div class="panel-card">
+          <div class="panel-header">
+            <span id="lblSkills">Skills & Languages</span>
+          </div>
+          <div class="input-group">
+            <label for="skills" id="lblSkillsInput">Skills (comma-separated)</label>
+            <input type="text" id="skills" />
+          </div>
+          <div class="input-group mb-0">
+            <label for="languages" id="lblLangsInput">Languages (comma-separated)</label>
+            <input type="text" id="languages" />
+          </div>
+        </div>
+      </aside>
+
+      <!-- O'ng panel: A4 sahifa ko'rinishi -->
+      <section class="preview-col">
+        <div class="preview-meta">
+          <span id="lblPageMeta">A4 Document</span>
+          <span id="lblPageOne">Page 1</span>
+        </div>
+
+        <div id="cvPage" class="cv-sheet tpl-modern">
+          <div class="cv-top-block">
+            <div class="cv-identity">
+              <div class="cv-fullname" id="pName"></div>
+              <div class="cv-subtitle" id="pRole"></div>
+            </div>
+            <div class="cv-avatar-box" id="pAvatarBox">
+              <img id="pAvatarImg" alt="Profile photo" />
+              <div class="cv-avatar-placeholder" id="pAvatarPlaceholder"></div>
+            </div>
+          </div>
+
+          <div class="cv-body-grid">
+            <div class="cv-side">
+              <div class="cv-side-title" id="pTitleContact"></div>
+              <div class="cv-contact-list" id="pContacts"></div>
+
+              <div class="cv-side-block" id="secSkills">
+                <div class="cv-side-title" id="pTitleSkills"></div>
+                <div class="cv-tags" id="pSkills"></div>
+              </div>
+
+              <div class="cv-side-block" id="secLanguages">
+                <div class="cv-side-title" id="pTitleLanguages"></div>
+                <div class="cv-tags" id="pLanguages"></div>
+              </div>
+            </div>
+
+            <div class="cv-main">
+              <div class="cv-block" id="secSummary">
+                <div class="cv-block-title" id="pTitleSummary"></div>
+                <p class="cv-text" id="pSummary"></p>
+              </div>
+
+              <div class="cv-block" id="secExperience">
+                <div class="cv-block-title" id="pTitleExperience"></div>
+                <div id="pExperience"></div>
+              </div>
+
+              <div class="cv-block" id="secEducation">
+                <div class="cv-block-title" id="pTitleEducation"></div>
+                <div id="pEducation"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <!-- Pastki izoh -->
+  <footer class="page-footer">
+    <span id="footerLeft">Sample content shown. Replace it with your own.</span>
+    <span id="footerRight">CV Builder • UZ / EN / RU</span>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
